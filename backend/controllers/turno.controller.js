@@ -1,4 +1,5 @@
 const Turno = require('../models/turno'); // Asegúrate de que la ruta al modelo sea correcta
+const Vigilancia = require('../models/vigilancia');
 
 const turnoCtrl = {};
 
@@ -18,11 +19,17 @@ turnoCtrl.getTurnos = async (req, res) => {
 turnoCtrl.createTurno = async (req, res) => {
   try {
     const { horainicio, horafin, fechainicio, fechafin, observaciones, activo, personal, vigilancia } = req.body;
+
+    // Crear el nuevo turno
     const newTurno = new Turno({ horainicio, horafin, fechainicio, fechafin, observaciones, activo, personal, vigilancia });
     await newTurno.save();
-    res.status(200).json({ status: '1', msg: 'Turno created' });
+
+    // Actualizar el campo 'turno_asignado' en Vigilancia
+    await Vigilancia.findByIdAndUpdate(vigilancia, { turno_asignado: true });
+
+    res.status(200).json({ status: '1', msg: 'Turno creado y vigilancia actualizada' });
   } catch (error) {
-    res.status(400).json({ status: '0', msg: 'Error creating turno', error: error.message });
+    res.status(400).json({ status: '0', msg: 'Error creando turno', error: error.message });
   }
 };
 

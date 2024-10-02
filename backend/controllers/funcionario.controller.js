@@ -101,4 +101,24 @@ funcionarioCtrl.deleteFuncionario = async (req, res) => {
     }
 };
 
+funcionarioCtrl.getFuncionarioByLegajo = async (req, res) => {
+    try {
+        const funcionario = await Funcionario.findOne({ legajo: req.params.legajo })
+            .populate('persona');
+        if (!funcionario) {
+            return res.status(404).json({
+                status: '0',
+                msg: 'Funcionario no encontrado.'
+            });
+        }
+        res.json(funcionario);
+    } catch (error) {
+        res.status(500).json({
+            status: '0',
+            msg: 'Error al obtener el funcionario por legajo.',
+            error
+        });
+    }
+};
+
 module.exports = funcionarioCtrl;

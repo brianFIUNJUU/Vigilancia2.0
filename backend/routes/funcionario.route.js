@@ -8,5 +8,6 @@ router.post('/', funcionarioCtrl.createFuncionario);
 router.get('/:id', funcionarioCtrl.getFuncionario);
 router.put('/:id', funcionarioCtrl.editFuncionario);
 router.delete('/:id', funcionarioCtrl.deleteFuncionario);
+router.get('/search/legajo/:legajo', funcionarioCtrl.getFuncionarioByLegajo);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const { Persona } = require('./persona');
 const { Schema } = mongoose;
 
 const FuncionarioSchema = new Schema({
+    legajo:{type: String, required: true},
     cargo: { type: String, required: true },
     fecha_inicio: { type: Date, required: true },
     fecha_fin: { type: Date },

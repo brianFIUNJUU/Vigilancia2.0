@@ -9,6 +9,7 @@ const PersonalSchema = new Schema({
     jerarquia:{type:String,required:true},
     dependencia:{type:Schema.Types.ObjectId, ref:'Dependencia',required:true},
     persona:{type:Schema.Types.ObjectId,ref:'Persona', required: true}
+    
 });
 
 module.exports = mongoose.model('Personal', PersonalSchema);
