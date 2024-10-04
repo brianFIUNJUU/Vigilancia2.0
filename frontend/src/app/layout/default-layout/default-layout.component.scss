@@ -7,11 +7,48 @@
     --scrollbar-hover-size: calc(var(--scrollbar-size) * 1.5);
   }
 }
-.img{
-  width: 4rem;
-  object-fit: cover;
-  border-radius: 5px;
-  overflow: hidden;
+
+/* default-layout.component.scss o styles.scss */
+.img {
+  width: 100%;
+  height: auto;
+  max-width: 50px; /* Tamaño máximo de la imagen */
+}
+
+@media (max-width: 768px) {
+  .img {
+    max-width: 150px; /* Tamaño máximo de la imagen para pantallas pequeñas */
+  }
+}
+
+@media (max-width: 576px) {
+  .img {
+    max-width: 100px; /* Tamaño máximo de la imagen para pantallas muy pequeñas */
+  }
+}
+/* Estilos por defecto */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.body {
+  flex-grow: 1;
+  padding: 1rem; /* Padding por defecto */
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 576px) {
+  .body {
+    padding: 0; /* Eliminar padding en pantallas pequeñas */
+  }
+
+  .c-container {
+    padding: 0 !important; /* Eliminar padding del contenedor en pantallas pequeñas */
+    margin: 0 !important; /* Eliminar márgenes del contenedor en pantallas pequeñas */
+    width: 100% !important; /* Asegurar que el contenedor ocupe todo el ancho */
+  }
 }
 // ng-scrollbar css variables
 //.cui-scrollbar {

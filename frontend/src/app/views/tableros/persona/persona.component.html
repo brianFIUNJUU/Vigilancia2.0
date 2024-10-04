@@ -138,56 +138,60 @@
     </button>
     <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
   </form>
-<!-- Buscar por DNI -->
-<div class="row mb-3">
-  <div class="col-md-6">
-    <div class="form-group">
-      <label for="searchDni">Buscar por DNI</label>
-      <input [(ngModel)]="searchDni" name="searchDni" id="searchDni" class="form-control" placeholder="DNI">
+
+  <!-- Buscar por DNI -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="searchDni">Buscar por DNI</label>
+        <input [(ngModel)]="searchDni" name="searchDni" id="searchDni" class="form-control" placeholder="DNI">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <button (click)="searchPersonaByDni(searchDni)" class="btn btn-info mt-4">Buscar</button>
     </div>
   </div>
-  <div class="col-md-6">
-    <button (click)="searchPersonaByDni(searchDni)" class="btn btn-info">Buscar</button>
-  </div>
-</div>
+
   <h3 class="mt-4">Lista de Personas</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Teléfono</th>
-        <th>Provincia</th>
-        <th>Departamento</th>
-        <th>Localidad</th>
-        <th>Código Postal</th>
-        <th>Domicilio</th>
-        <th>Fecha de Nacimiento</th>
-        <th>Sexo</th>
-        <th>Edad</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let persona of personas">
-        <td>{{ persona.nombre }}</td>
-        <td>{{ persona.apellido }}</td>
-        <td>{{ persona.dni }}</td>
-        <td>{{ persona.telefono }}</td>
-        <td>{{ persona.provincia }}</td>
-        <td>{{ persona.departamento }}</td>
-        <td>{{ persona.localidad }}</td>
-        <td>{{ persona.codigoPostal }}</td>
-        <td>{{ persona.domicilio }}</td>
-        <td>{{ persona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ persona.sexo }}</td>
-        <td>{{ persona.edad }}</td>
-        <td>
-          <button (click)="editPersona(persona)" class="btn btn-warning btn-sm">Editar</button>
-          <button (click)="deletePersona(persona._id)" class="btn btn-danger btn-sm">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>DNI</th>
+          <th>Teléfono</th>
+          <th>Provincia</th>
+          <th>Departamento</th>
+          <th>Localidad</th>
+          <th>Código Postal</th>
+          <th>Domicilio</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Sexo</th>
+          <th>Edad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let persona of personas">
+          <td>{{ persona.nombre }}</td>
+          <td>{{ persona.apellido }}</td>
+          <td>{{ persona.dni }}</td>
+          <td>{{ persona.telefono }}</td>
+          <td>{{ persona.provincia }}</td>
+          <td>{{ persona.departamento }}</td>
+          <td>{{ persona.localidad }}</td>
+          <td>{{ persona.codigoPostal }}</td>
+          <td>{{ persona.domicilio }}</td>
+          <td>{{ persona.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ persona.sexo }}</td>
+          <td>{{ persona.edad }}</td>
+          <td>
+            <button (click)="editPersona(persona)" class="btn btn-warning btn-sm">Editar</button>
+            <button (click)="deletePersona(persona._id)" class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

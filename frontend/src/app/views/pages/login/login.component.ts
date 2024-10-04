@@ -1,39 +1,38 @@
 import { Component } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
-import {AuthenticateService} from '../../../services/authenticate.service';
+import { AuthenticateService } from '../../../services/authenticate.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: true,
-    imports: [SharedModule]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class LoginComponent {
-  //Para login
+  // Para login
   public email: string = '';
   public password: string = '';
   public message: string = '';
   public type: string = '';
   public loadinglogin: boolean = false;
 
-  //Para forgot
+  // Para forgot
   public visible = false;
   public emailforgot: string = '';
   public messagemodal: string = '';
   public typemodal: string = '';
   public loadingforgot: boolean = false;
 
-
   constructor(private authService: AuthenticateService, private router: Router) { }
 
   login() {
     if (this.email === '' || this.password === '') {
-      this.message = "Error: Enter a valid email address or password.";
+      this.message = "Error: Ingresa una dirección de correo electrónico o contraseña válida.";
       this.type = "danger";
-    }
-    else {
+    } else {
       this.loadinglogin = true;
       this.authService.login(this.email, this.password)
         .then(() => {
@@ -41,15 +40,25 @@ export class LoginComponent {
           this.router.navigate(['/dashboard']);
         })
         .catch((error) => {
-          if (error.message === 'auth/email-not-verified') {
-            this.message = "Your email isn't confirmed. Please verify your email to confirm your account.";
-            this.type = "warning";
-          }
-          else {
+          this.loadinglogin = false;
+          if (error.code === 'auth/email-not-verified') {
+            Swal.fire({
+              title: 'Email no confirmado',
+              text: 'Tu email aún no ha sido confirmado. Revisa la bandeja de entrada con la leyenda "noreply" y haz click en el link para confirmar el email. Si no lo encuentras, revisa en spam.',
+              icon: 'warning',
+              confirmButtonText: 'Entendido'
+            });
+          } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
+            Swal.fire({
+              title: 'Credenciales inválidas',
+              text: 'Por favor ingresa los datos correctamente. Si no te has registrado, comunícate con el administrador del sistema.',
+              icon: 'warning',
+              confirmButtonText: 'Entendido'
+            });
+          } else {
             this.message = "Error: " + error.message;
             this.type = "danger";
           }
-          this.loadinglogin = false;
         });
     }
   }
@@ -62,25 +71,34 @@ export class LoginComponent {
     this.visible = event;
   }
 
-  forgotpassword() {
+    forgotpassword() {
     if (this.emailforgot === '') {
-      this.messagemodal = "Error: Enter a valid email address";
+      this.messagemodal = "Error: Ingresa una dirección de correo electrónico válida.";
       this.typemodal = "danger";
-    }
-    else {
+    } else {
       this.loadingforgot = true;
-      this.authService.forgotPassword(this.emailforgot)
-        .then(() => {
-          this.messagemodal = "Password reset email sent.";
-          this.typemodal = "success";
-          this.loadingforgot = false;
-        })
-        .catch((error) => {
-          this.messagemodal = 'Error: ' + error.message;
+      this.authService.getCurrentUser().then((user) => {
+        if (user && user.email === this.emailforgot) {
+          this.authService.forgotPassword(this.emailforgot)
+            .then(() => {
+              this.messagemodal = "Correo de restablecimiento de contraseña enviado.";
+              this.typemodal = "success";
+              this.loadingforgot = false;
+            })
+            .catch((error) => {
+              this.messagemodal = 'Error: ' + error.message;
+              this.typemodal = "danger";
+              this.loadingforgot = false;
+            });
+        } else {
+          this.messagemodal = "Error: El correo electrónico no está asociado a una cuenta logueada.";
           this.typemodal = "danger";
           this.loadingforgot = false;
-        });
+        }
+      }).catch((error) => {
+        this.messagemodal = 'Error: ' + error.message;
+        this.typemodal = "danger";
+        this.loadingforgot = false;
+      });
     }
-  }
-
-}
+  }}

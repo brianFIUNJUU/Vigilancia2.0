@@ -3,37 +3,26 @@ import { INavData } from '@coreui/angular';
 export const navItems: INavData[] = [
   
   {
-    name: 'Components',
+    name: 'componentes',
     title: true
   },
   
   
   {
-    name: 'Forms',
-    url: '/forms',
+    name: 'Gestión de Vigilancias',
+    url: '/tableros',
     iconComponent: { name: 'cil-notes' },
     children: [
       {
-        name: 'Form Control',
-        url: '/forms/form-control',
+        name: 'Formulario de Vigilancia',
+        url: '/tableros/vigilanciaa',
         icon: 'nav-icon-bullet'
       },
       {
-        name: 'Select',
-        url: '/forms/select',
+        name: 'Gestion de turnos de vigilancias',
+        url: '/tableros/turnos',
         icon: 'nav-icon-bullet'
       },
-      {
-        name: 'Checks & Radios',
-        url: '/forms/checks-radios',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Range',
-        url: '/forms/range',
-        icon: 'nav-icon-bullet'
-      },
-      
       
     ]
   },
@@ -59,6 +48,12 @@ export const navItems: INavData[] = [
         url: '/tableros/dependencia',
         icon: 'nav-icon-bullet'
       },
+      {
+        name: 'funcionario',
+        url: '/tableros/funcionario',
+        icon: 'nav-icon-bullet'
+      },
+      
      
     ]
   },
@@ -89,7 +84,7 @@ export const navItems: INavData[] = [
         name: 'Violencia de genero',
         url: '/tableros/violencia',
         icon: 'nav-icon-bullet'
-      },
+      }
     ]
   },
   
@@ -108,9 +103,15 @@ export const navItems: INavData[] = [
         url: '/register',
         icon: 'nav-icon-bullet'
       },
+      {
+        name: 'Usuarios',
+        url: '/tableros/usuario',
+        icon: 'nav-icon-bullet'
+      }
      
     ]
-  },
+  }
+  ,
  
   {
     title: true,
@@ -118,8 +119,8 @@ export const navItems: INavData[] = [
     class: 'mt-auto'
   },
   {
-    name: 'Docs',
-    url: 'https://coreui.io/angular/docs/5.x/',
+    name: '¡Contactenos!',
+    url: 'https://observatorio.seguridad.jujuy.gob.ar/',
     iconComponent: { name: 'cil-description' },
     attributes: { target: '_blank' }
   }

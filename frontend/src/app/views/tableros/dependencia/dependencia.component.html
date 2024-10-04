@@ -2,71 +2,121 @@
   <h2>Gestión de Dependencias</h2>
 
   <form (ngSubmit)="guardarDependencia()">
-    <div class="form-group">
-      <label for="juridiccion">Jurisdicción:</label>
-      <input type="text" id="juridiccion" [(ngModel)]="dependencia.juridiccion" name="juridiccion" class="form-control" required>
+    <div class="container">
+      <div class="row">
+        <!-- Columna 1 -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="juridiccion">Jurisdicción:</label>
+            <input
+              type="text"
+              id="juridiccion"
+              [(ngModel)]="dependencia.juridiccion"
+              name="juridiccion"
+              class="form-control"
+              required
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="localidad">Localidad:</label>
+            <input
+              type="text"
+              id="localidad"
+              [(ngModel)]="dependencia.localidad"
+              name="localidad"
+              class="form-control"
+              required
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="domicilio">Domicilio:</label>
+            <input
+              type="text"
+              id="domicilio"
+              [(ngModel)]="dependencia.domicilio"
+              name="domicilio"
+              class="form-control"
+              required
+            />
+          </div>
+  
+          
+        </div>
+  
+        <!-- Columna 2 -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="unidad_regional">Unidad Regional:</label>
+            <select
+              id="unidad_regional"
+              [(ngModel)]="dependencia.unidad_regional"
+              name="unidad_regional"
+              class="form-select"
+              required
+            >
+              <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8]" [value]="'Unidad Regional N°' + num">
+                Unidad Regional N°{{ num }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dniJefe">DNI del Jefe:</label>
+            <input
+              type="text"
+              id="dniJefe"
+              [(ngModel)]="dniJefe"
+              name="dniJefe"
+              class="form-control"
+              placeholder="Ingrese el DNI del jefe"
+            />
+            <button type="button" class="btn btn-primary mt-2" (click)="buscarJefePorDni()">Buscar Jefe</button>
+            <small class="text-danger" *ngIf="mensajeError">{{ mensajeError }}</small>
+          </div>
+  
+          <div class="form-group">
+            <label>Jefe Asignado:</label>
+            <p>{{ dependencia.jefe.nombre }} {{ dependencia.jefe.apellido }} (DNI: {{ dependencia.jefe.dni }})</p>
+          </div>
+  
+          <button type="submit" class="btn btn-success">Guardar Dependencia</button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="localidad">Localidad:</label>
-      <input type="text" id="localidad" [(ngModel)]="dependencia.localidad" name="localidad" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label for="domicilio">Domicilio:</label>
-      <input type="text" id="domicilio" [(ngModel)]="dependencia.domicilio" name="domicilio" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label for="unidad_regional">Unidad Regional:</label>
-      <input type="text" id="unidad_regional" [(ngModel)]="dependencia.unidad_regional" name="unidad_regional" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-      <label for="dniJefe">DNI del Jefe:</label>
-      <input type="text" id="dniJefe" [(ngModel)]="dniJefe" name="dniJefe" class="form-control">
-      <button type="button" class="btn btn-primary mt-2" (click)="buscarJefePorDni()">Buscar Jefe</button>
-      <small class="text-danger" *ngIf="mensajeError">{{ mensajeError }}</small>
-    </div>
-
-    <div class="form-group">
-      <label>Jefe Asignado:</label>
-      <p>{{ dependencia.jefe.nombre }} {{ dependencia.jefe.apellido }} (DNI: {{ dependencia.jefe.dni }})</p>
-    </div>
-<button (click)="guardarDependencia()" class="btn btn-success">Guardar Dependencia</button>
-
-    <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
   </form>
 
   <hr>
 
   <h3>Lista de Dependencias</h3>
- <table class="table">
-  <thead>
-    <tr>
-      <th>Jurisdicción</th>
-      <th>Localidad</th>
-      <th>Domicilio</th>
-      <th>Unidad Regional</th>
-      <th>Jefe</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let dep of dependencias">
-      <td>{{ dep.juridiccion }}</td>
-      <td>{{ dep.localidad }}</td>
-      <td>{{ dep.domicilio }}</td>
-      <td>{{ dep.unidad_regional }}</td>
-      <td>
-        
-        {{ dep.jefe.nombre || '' }} {{ dep.jefe.apellido || '' }} 
-        (DNI: {{ dep.jefe.dni || 'N/A' }})
-      </td>
-      <td>
-        <button class="btn btn-primary" (click)="editarDependencia(dep)">Editar</button>
-        <button class="btn btn-danger" (click)="eliminarDependencia(dep._id)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+ <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Jurisdicción</th>
+        <th>Localidad</th>
+        <th>Domicilio</th>
+        <th>Unidad Regional</th>
+        <th>Jefe</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dep of dependencias">
+        <td>{{ dep.juridiccion }}</td>
+        <td>{{ dep.localidad }}</td>
+        <td>{{ dep.domicilio }}</td>
+        <td>{{ dep.unidad_regional }}</td>
+        <td>
+          {{ dep.jefe.nombre || '' }} {{ dep.jefe.apellido || '' }} 
+          (DNI: {{ dep.jefe.dni || 'N/A' }})
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="editarDependencia(dep)">Editar</button>
+          <button class="btn btn-danger" (click)="eliminarDependencia(dep._id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

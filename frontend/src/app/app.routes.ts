@@ -17,7 +17,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        // canActivate: [authGuard],
+         canActivate: [authGuard],
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
      
@@ -59,7 +59,7 @@ export const routes: Routes = [
     data: {
       title: 'Register Page'
     }
-  },
+  },  
  
   
   

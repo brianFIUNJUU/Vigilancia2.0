@@ -6,7 +6,7 @@
           <c-card class="p-4">
             <c-card-body>
               <form cForm>
-                <h1>Login</h1>
+                <h1>Inicio de sesion</h1>
                 <!-- Sección de mensajes-->
                 @if (message) {
                   <div class="alert alert-{{type}}" role="alert">
@@ -14,7 +14,7 @@
                   </div>
                 }
                 <!---------------------->
-                <p class="text-body-secondary">Sign In to your account</p>
+                <p class="text-body-secondary">Complete con sus datos</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
@@ -28,7 +28,7 @@
                   <input
                     autoComplete="current-password"
                     cFormControl
-                    placeholder="Password"
+                    placeholder="Contraseña"
                     type="password"
                     name="password"
                     [(ngModel)]="password"
@@ -38,16 +38,16 @@
                   <c-col xs="6">
                     <button cButton class="px-4" color="primary" (click)="login()">
                       @if (loadinglogin) {
-                        <c-spinner aria-hidden="false" size="sm"></c-spinner>Loading...
+                        <c-spinner aria-hidden="false" size="sm"></c-spinner>Cargando...
                       }
                       @else {
-                        Login
+                        Ingresar
                       }
                     </button>
                   </c-col>
                   <c-col class="text-right" xs="6">
                     <button cButton class="px-0" color="link" (click)="toggleModal()">
-                      Forgot password?
+                      Olvidaste tu contraseña?
                     </button>
                   </c-col>
                 </c-row>
@@ -57,13 +57,12 @@
           <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-primary py-5">
             <c-card-body class="text-center">
               <div>
-                <h2>Sign up</h2>
+                <h2>Registro</h2>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                  Si aun no tienes un usuario registrado deberas hacerlo para poder iniciar sesion y pronto te mandaremos un correo de confirmacion.
                 </p>
                 <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
-                  Register Now!
+                  Registrate ahora!
                 </button>
               </div>
             </c-card-body>
@@ -75,7 +74,7 @@
     <!-- Modal Forgot Password -->
     <c-modal id="modalForgot" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
       <c-modal-header>
-        <h5 cModalTitle>Forgot Password</h5>
+        <h5 cModalTitle>Olvide mi contraseña</h5>
         <button (click)="toggleModal()" cButtonClose></button>
       </c-modal-header>
       <c-modal-body>
@@ -90,14 +89,14 @@
       </c-modal-body>
       <c-modal-footer>
         <button (click)="toggleModal()" cButton color="secondary">
-          Close
+          Cerrar
         </button>
         <button cButton color="primary" (click)="forgotpassword()">
           @if (loadingforgot) {
             <c-spinner aria-hidden="false" size="sm"></c-spinner>Loading...
           }
           @else {
-            Send Email
+            Email enviado
           }
         </button>
       </c-modal-footer>

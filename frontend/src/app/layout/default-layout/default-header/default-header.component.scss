@@ -12,3 +12,9 @@
     margin-bottom: auto;
     padding-top: auto; 
 }
+/* Asegurarse de que el contenedor dentro del header ocupe todo el ancho */
+.full-width-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}

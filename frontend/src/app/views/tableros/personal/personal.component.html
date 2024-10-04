@@ -2,36 +2,56 @@
 
     <!-- Formulario para crear/editar Personal -->
     <form (ngSubmit)="guardarPersonal()">
-      <div class="form-group">
-        <label for="legajo">Legajo</label>
-        <input type="text" id="legajo" [(ngModel)]="personal.legajo" name="legajo" class="form-control" required />
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="legajo">Legajo</label>
+            <input type="text" id="legajo" [(ngModel)]="personal.legajo" name="legajo" class="form-control" required />
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="jerarquia">Jerarquía</label>
+            <input type="text" id="jerarquia" [(ngModel)]="personal.jerarquia" name="jerarquia" class="form-control" required />
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="jerarquia">Jerarquía</label>
-        <input type="text" id="jerarquia" [(ngModel)]="personal.jerarquia" name="jerarquia" class="form-control" required />
+    
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dependencia">Dependencia</label>
+            <select id="dependencia" [(ngModel)]="personal.dependencia" name="dependencia" class="form-control form-select" required>
+              <option value="" disabled selected>Selecciona una Dependencia</option>
+              <option *ngFor="let dependencia of dependencias" [value]="dependencia._id">
+                {{ dependencia.juridiccion }} - {{ dependencia.localidad }}
+              </option>
+            </select>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dniPersona">DNI de la Persona:</label>
+            <input type="text" id="dniPersona" [(ngModel)]="dniPersona" name="dniPersona" class="form-control" placeholder="Ingrese el dni de la persona buscada"/>
+            <button type="button" class="btn btn-primary mt-2" (click)="buscarPersonaPorDni()">Buscar Persona</button>
+            <small class="text-danger" *ngIf="mensajeError">{{ mensajeError }}</small>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="dependencia">Dependencia</label>
-        <select id="dependencia" [(ngModel)]="personal.dependencia" name="dependencia" class="form-control form-select" required>
-            <option value="" disabled selected>Selecciona una Dependencia</option>
-          <option *ngFor="let dependencia of dependencias" [value]="dependencia._id">
-            {{ dependencia.juridiccion }} - {{ dependencia.localidad }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="dniPersona">DNI de la Persona:</label>
-        <input type="text" id="dniPersona" [(ngModel)]="dniPersona" name="dniPersona" class="form-control" />
-        <button type="button" class="btn btn-primary mt-2" (click)="buscarPersonaPorDni()">Buscar Persona</button>
-        <small class="text-danger" *ngIf="mensajeError">{{ mensajeError }}</small>
-      </div>
+    
       <div class="form-group">
         <label>Persona Asignada:</label>
         <p>{{ personal.persona.nombre || '' }} {{ personal.persona.apellido || '' }} (DNI: {{ personal.persona.dni || 'N/A' }})</p>
       </div>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
+    
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancelar</button>
+      </div>
     </form>
+    
     <hr class="separator">
         <!-- Formulario para buscar por legajo -->
         <div class="form-group mb-4">
@@ -44,30 +64,32 @@
     <!-- Tabla para mostrar la lista de Personales -->
     <div class="mt-4">
       <h3>Listado de Personales</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Legajo</th>
-            <th>Jerarquía</th>
-            <th>Dependencia</th>
-            <th>Persona</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let personal of personales">
-            <td>{{ personal.legajo }}</td>
-            <td>{{ personal.jerarquia }}</td>
-            <td>{{ personal.dependencia.juridiccion }} - {{ personal.dependencia.localidad }}</td>
-            <td>
-              {{ personal.persona.nombre || '' }} {{ personal.persona.apellido || '' }} - {{ personal.persona.dni || 'N/A' }}
-            </td>
-            <td>
-              <button class="btn btn-warning btn-sm" (click)="editarPersonal(personal)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="eliminarPersonal(personal._id)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Legajo</th>
+              <th>Jerarquía</th>
+              <th>Dependencia</th>
+              <th>Persona</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let personal of personales">
+              <td>{{ personal.legajo }}</td>
+              <td>{{ personal.jerarquia }}</td>
+              <td>{{ personal.dependencia.juridiccion }} - {{ personal.dependencia.localidad }}</td>
+              <td>
+                {{ personal.persona.nombre || '' }} {{ personal.persona.apellido || '' }} - {{ personal.persona.dni || 'N/A' }}
+              </td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="editarPersonal(personal)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarPersonal(personal._id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 </div>

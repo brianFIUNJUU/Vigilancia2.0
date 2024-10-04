@@ -60,7 +60,35 @@ export const routes: Routes = [
         data: {
           title: 'Dependencia'
         }
+      },
+      {
+        path: 'funcionario',
+        loadComponent: () => import('./funcionario/funcionario.component').then(m => m.FuncionarioComponent),
+        data: {
+          title: 'Funcionario'
+        }
+      },
+      {
+        path: 'vigilanciaa',
+        loadComponent: () => import('./vigilanciaa/vigilanciaa.component').then(m => m.VigilanciaaComponent),
+        data: {
+          title: 'Vigilanciaa'
+        }
+      },
+      {
+        path: 'turnos',
+        loadComponent: () => import('./turnos/turnos.component').then(m => m.TurnosComponent),
+        data: {
+          title: 'turnos'
+        }
+      },
+      {
+        path: 'usuario',
+        loadComponent: () => import('./usuario/usuario.component').then(m => m.UsuarioComponent),
+        data: {
+          title: 'usuario'
+        }
       }
     ]
-  }
+  } 
 ];

@@ -1,0 +1,456 @@
+<div class="container">
+  <h2>Gestión de Vigilancia</h2>
+
+  <!-- Formulario para crear/editar vigilancia -->
+  <!-- Formulario para crear/editar vigilancia -->
+  <form (ngSubmit)="guardarVigilancia()">
+    <div class="container">
+      <div class="row">
+        <!-- Columna 1 -->
+        <div class="col-md-6">
+          <!-- UNIDAD SOLICITANTE -->
+          <div class="form-group">
+            <label for="unidad_solicitante">Unidad Solicitante:</label>
+            <select
+            id="unidad_solicitante"
+            [(ngModel)]="vigilancia.unidad_solicitante"
+            name="unidad_solicitante"
+            class="form-select"
+          >
+            <option value="" disabled selected class="option-placeholder">Seleccione la unidad  Solicitante</option>
+            <option value="Autoridad-Poder Ejecutivo">Autoridad-Poder Ejecutivo</option>
+            <option value="Ministerio Publico de la acusacion">Ministerio Publico de la acusacion</option>
+            <option value="Poder Judicial">Poder Judicial</option>
+            <option value="Policia">Policia</option>
+            <option value="Otro">Otro</option>
+          </select>
+          </div>
+          <div class="form-group">
+            <label for="latitud">Detalle de la unidad solicitante:</label>
+            <input
+              id="detalle de la unidad solicitante"
+             
+              name="detalle de la unida"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese el detalle de la unidad solicitante"
+            />
+          </div>
+          <div class="form-group">
+            <label for="latitud">N° de Oficio:</label>
+            <input
+              id="N° de oficio"
+             
+              name="N° de oficio"
+              type="text"
+              class="form-control"
+              placeholder="N° de Oficio"
+            />
+          </div>
+          
+
+          <div class="form-group">
+          <label for="latitud">Cargo o juez:</label>
+          <input
+            id="cargo o juez"
+           
+            name="cargo o juez"
+            type="text"
+            class="form-control"
+            placeholder="cargo o juez"
+          />
+        </div>
+        <div class="form-group">
+          <label for="Expediente">Expediente:</label>
+          <input
+            id="expédiente"
+           
+            name="expediente"
+            type="text"
+            class="form-control"
+            placeholder="expediente"
+          />
+        </div>
+        <div class="form-group">
+          <label for="Caratula">Caratula:</label>
+          <input
+            id="caratula"
+           
+            name="caratula"
+            type="text"
+            class="form-control"
+            placeholder="caratula"
+          />
+        </div>
+        <div class="form-group">
+          <label for="motivo_custodia">Motivo de custodia:</label>
+          <select
+            id="motivo_custodia"
+            [(ngModel)]="vigilancia.motivo_custodia"
+            name="motivo_custodia"
+            class="form-select"
+          >
+            <option value="" disabled selected class="option-placeholder">Seleccione el motivo de la custodia</option>
+            <option value="Menor de edad">Menor de edad</option>
+            <option value="Violencia de género">Violencia de género</option>
+            <option value="Persona detenida">Persona detenida</option>
+            <option value="Posible usurpación">Posible usurpación</option>
+            <option value="Protección de persona">Protección de persona</option>
+            <option value="Usurpación">Usurpación</option>
+            <option value="Vigilancia domicilio">Vigilancia domicilio</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fecha_inicio">Fecha de Inicio:</label>
+          <input
+            id="fecha_inicio"
+            [(ngModel)]="vigilancia.fecha_inicio"
+            name="fecha_inicio"
+            type="date"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Vigencia:</label>
+          <input
+            id="Vigencia"
+            name="Vigencia"
+            type="text"
+            class="form-control"
+            placeholder="Vigencia"
+          />
+          </div>
+        <div class="form-group">
+          <label for="">Direccion de la vigilancia:</label>
+          <input
+            id="Direccion de la vigilancia"
+            name="Direccion de la vigilancia"
+            type="text"
+            class="form-control"
+            placeholder="Direccion de la vigilancia"
+          />
+          </div>
+          <div class="form-group">
+            <label for="latitud">Latitud:</label>
+            <input
+              id="latitud"
+              [(ngModel)]="vigilancia.latitud"
+              name="latitud"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese latitud"
+              (change)="actualizarMapaDesdeFormulario()" 
+            />
+          </div>
+          
+          
+          <div class="form-group">
+            <label for="longitud">Longitud:</label>
+            <input
+              id="longitud"
+              [(ngModel)]="vigilancia.longitud"
+              name="longitud"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese longitud"
+              (change)="actualizarMapaDesdeFormulario()" 
+            />
+          </div>
+          <button class="btn btn-warning btn-sm" (click)="actualizarMapaDesdeFormulario()" >Actualizar ubicacion</button>
+          
+          
+          <!-- Añadimos el div para el mapa -->
+          <div id="map" style="height: 400px; width: 100%;"></div>
+          
+
+          <!-- DNI DE LA PERSONA -->
+          <div class="form-group">
+            <label for="dniPersona">DNI de la Persona:</label>
+            <input
+              id="dniPersona"
+              [(ngModel)]="dniPersona"
+              name="dniPersona"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese DNI de la persona a buscar"
+              (blur)="buscarPersonaPorDni()"
+            />
+          </div>
+          
+  
+          <div *ngIf="personaExistente" class="form-group">
+            <p><strong>Persona Encontrada:</strong> {{ personaExistente.nombre }} {{ personaExistente.apellido }}</p>
+          </div>
+          <div *ngIf="!personaExistente && dniPersona" class="form-group">
+            <p class="text-danger">La persona con el DNI proporcionado no existe.</p>
+          </div>
+  
+          <!-- <div class="form-group">
+            <label for="legajoFuncionario">Legajo del Funcionario:</label>
+            <input
+              id="legajoFuncionario"
+              [(ngModel)]="legajoFuncionario"
+              name="legajoFuncionario"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese legajo del funcionario a buscar"
+              (blur)="buscarFuncionarioPorLegajo()"
+            />
+          </div>
+  
+          <div *ngIf="funcionarioExistente" class="form-group">
+            <p><strong>Funcionario Encontrado:</strong> {{ funcionarioExistente.persona.nombre }} {{ funcionarioExistente.persona.apellido }}</p>
+          </div>
+          <div *ngIf="!funcionarioExistente && legajoFuncionario" class="form-group">
+            <p class="text-danger">El funcionario con el legajo proporcionado no existe.</p>
+          </div>
+   -->
+         
+  
+        </div>
+  
+        <!-- Columna 2 -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dependencia" class="form-label">Dependencia:</label>
+            
+            <div class="input-group">
+              <select
+                id="dependencia"
+                [(ngModel)]="vigilancia.juridiccion"
+                name="dependencia"
+                
+                class="form-select" 
+                placeholder="Seleccione una Juridiccion"
+              >
+                <option *ngFor="let dep of dependencias" [ngValue]="dep">{{ dep.juridiccion }}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="observaciones">Observaciones:</label>
+            <textarea
+              id="observaciones"
+              [(ngModel)]="vigilancia.observaciones"
+              name="observaciones"
+              class="form-control"
+              placeholder="Ingrese observaciones"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="activo">Activo:</label>
+            <input
+              id="activo"
+              [(ngModel)]="vigilancia.activo"
+              name="activo"
+              type="checkbox"
+            />
+          </div>
+          <div class="form-group">
+            <label for="fecha_fin">Fecha de Fin:</label>
+            <input
+              id="fecha_fin"
+              [(ngModel)]="vigilancia.fecha_fin"
+              name="fecha_fin"
+              type="date"
+              class="form-control"
+            />
+          </div>
+  
+         
+  
+         
+          
+          <div class="form-group">
+            <label for="objetivo">Objetivo:</label>
+            <input
+              id="objetivo"
+              [(ngModel)]="vigilancia.objetivo"
+              name="objetivo"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese objetivo"
+            />
+          </div>
+          <div class="form-group">
+            <label for="cant_dias">Cantidad de Días:</label>
+            <input
+              id="cant_dias"
+              [(ngModel)]="vigilancia.cant_dias"
+              name="cant_dias"
+              type="number"
+              class="form-control"
+              placeholder="Ingrese cantidad de días"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="destino">Destino:</label>
+            <input
+              id="destino"
+              [(ngModel)]="vigilancia.destino"
+              name="destino"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese destino"
+            />
+          </div>
+<!--   
+          <div class="form-group">
+            <label for="turno_asignado">Turno Asignado:</label>
+            <input
+              id="turno_asignado"
+              [(ngModel)]="vigilancia.turno_asignado"
+              name="turno_asignado"
+              type="checkbox"
+            />
+          </div>
+   -->
+        
+  
+          <!-- <div class="form-group">
+            <label for="recurso">Recurso:</label>
+            <input
+              id="recurso"
+              [(ngModel)]="vigilancia.recurso"
+              name="recurso"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese recurso"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label for="prioridad">Prioridad:</label>
+            <input
+              id="prioridad"
+              [(ngModel)]="vigilancia.prioridad"
+              name="prioridad"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese prioridad"
+            />
+          </div>
+         
+          
+          <div class="form-group">
+            <label for="vigilancia">Vigilancia:</label>
+            <input
+              id="vigilancia"
+              [(ngModel)]="vigilancia.vigilancia"
+              name="vigilancia"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese vigilancia"
+            />
+          </div> -->
+  
+  
+          <!-- Campos para archivos -->
+    <!-- Campos para archivos -->
+<!-- Campos para archivos -->
+<div class="form-group">
+  <label class="font-weight-bold">Archivos Cargados:</label>
+  <div *ngFor="let archivo of archivos; let i = index" class="archivo-container mb-2">
+    
+    <!-- Contenedor con bordes para el archivo -->
+    <div class="file-card p-2 border rounded shadow-sm">
+      <div class="file-info">
+        
+        <!-- Nombre del archivo -->
+        <p class="mb-1">
+          <strong>Nombre:</strong> {{ archivo.fileName }}
+        </p>
+        
+        <!-- Vista previa para imágenes -->
+        <div *ngIf="archivo.mimeType?.startsWith('image/')" class="preview-container my-1">
+          <img [src]="getFileUrl(archivo.base64, archivo.mimeType)" alt="Vista previa" class="img-fluid img-thumbnail" width="100"/>
+        </div>
+
+        <!-- Enlace para otros tipos de archivos -->
+        <div *ngIf="!archivo.mimeType?.startsWith('image/')" class="mt-2">
+          <a [href]="getFileUrl(archivo.base64, archivo.mimeType)" target="_blank">Ver archivo</a>
+        </div>
+
+        <!-- Botón para eliminar el archivo cargado -->
+        <!-- Botón para eliminar el archivo cargado -->
+<div class="mt-2">
+  <button class="btn btn-danger btn-sm" (click)="eliminarArchivo(i)">Eliminar archivo</button>
+</div>
+<div class="mt-2"> <!-- Reduce top margin -->
+  <label class="btn btn-warning">
+    Cargar archivo
+    <input type="file" (change)="onFileChange($event, i)" hidden />
+  </label>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- como para que el formato de las letras del cotnenido de la tabla se mas chico asi entra todo  -->
+  
+          <div *ngIf="mensajeError" class="form-group">
+            <p class="text-danger">{{ mensajeError }}</p>
+          </div>
+  
+          <button type="submit" class="btn btn-primary btn-block">
+            {{ vigilancia._id ? 'Actualizar' : 'Agregar' }} Vigilancia
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+
+
+  <h2>Lista de Vigilancias</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>Persona</th>
+            <th>Funcionario</th>
+            <th>Juridiccion</th>
+            <th>Turno Asignado</th>
+            <th>Activo</th>
+            <th class="wide-column">Archivo</th>
+            <th>Motivo de la custodia</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vigilancia of vigilancias">
+            <td>{{ vigilancia.persona.nombre }} {{ vigilancia.persona.apellido }}</td>
+            <td>{{ vigilancia.funcionario?.cargo }}</td>
+            <td>{{ vigilancia.juridiccion.juridiccion }}</td>
+            <td>{{ vigilancia.turno_asignado ? 'Si' : 'No' }}</td>
+            <td>{{ vigilancia.activo ? 'Si' : 'No' }}</td>
+            <td class="wide-column">
+              <div *ngFor="let archivo of getArchivosVigilancia(vigilancia); let i = index">
+                <div class="file-info" *ngIf="archivo.fileName">
+                  <a *ngIf="!archivo.mimeType?.startsWith('image/')" 
+                     [href]="getFileUrl(archivo.base64, archivo.mimeType)" 
+                     [download]="archivo.fileName" 
+                     target="_blank">{{ archivo.fileName }}</a>
+                </div>
+              </div>
+            </td>
+            <td>{{ vigilancia.motivo_custodia }}</td>
+            <td>
+              <button (click)="editarVigilancia(vigilancia)" class="btn btn-warning btn-sm">Editar</button>
+              <button (click)="eliminarVigilancia(vigilancia._id)" class="btn btn-danger btn-sm">Eliminar</button>
+              <!-- <ng-container *ngIf="!vigilancia.turno_asignado">
+                <button (click)="asignarTurno(vigilancia)" class="btn btn-primary btn-sm">Asignar turno</button>
+              </ng-container> -->
+              <ng-container *ngIf="vigilancia.turno_asignado">
+                <!-- Opcional: Agregar algo aquí si ya tiene turno asignado -->
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

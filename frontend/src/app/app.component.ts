@@ -16,7 +16,7 @@ import { DependenciaComponent } from './views/tableros/dependencia/dependencia.c
   ]
 })
 export class AppComponent implements OnInit {
-  title = 'CoreUI Angular Admin Template';
+  title = 'Sistema de Vigilancias';
 
   constructor(
     private router: Router,
